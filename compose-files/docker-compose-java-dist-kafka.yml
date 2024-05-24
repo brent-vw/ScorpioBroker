@@ -1,25 +1,6 @@
 version: '3'
 
 services:
-  zookeeper:
-    image: zookeeper
-    ports:
-      - "2181"
-  kafka:
-    image: bitnami/kafka:3.5.1-debian-11-r6
-    ports:
-      - "9092"
-    environment:
-      KAFKA_ADVERTISED_HOST_NAME: kafka
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_PORT: 9092
-      KAFKA_LOG_RETENTION_MS: 10000
-      KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS: 5000
-      ALLOW_PLAINTEXT_LISTENER: "yes"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    depends_on:
-      - zookeeper
   postgres:
     image: postgis/postgis
     ports:
@@ -29,85 +10,74 @@ services:
       POSTGRES_PASSWORD: ngb
       POSTGRES_DB: ngb
   emgr:
-    image: scorpiobroker/entity-manager:java-kafka-latest
-    environment:
-      DBHOST: postgres
-      BUSHOST: kafka
-      QUARKUS_EUREKA_SERVICE-URL_DEFAULT: "http://eureka:8761/eureka"
+    image: scorpiobroker/entity-manager:fanout-test
+    env_file:
+      - path: ./env.env
+        required: true
     ports:
       - "1025:1025"
     depends_on:
-      - kafka
+      - postgres
   histemgr:
-    image: scorpiobroker/history-entity-manager:java-kafka-latest
-    environment:
-      DBHOST: postgres
-      BUSHOST: kafka
-      QUARKUS_EUREKA_SERVICE-URL_DEFAULT: "http://eureka:8761/eureka"
+    image: scorpiobroker/history-entity-manager:fanout-test
+    env_file:
+      - path: ./env.env
+        required: true
     ports:
       - "1040:1040"
     depends_on:
-      - kafka
+      - postgres
   histqmgr:
-    image: scorpiobroker/history-query-manager:java-kafka-latest
-    environment:
-      DBHOST: postgres
-      BUSHOST: kafka
-      QUARKUS_EUREKA_SERVICE-URL_DEFAULT: "http://eureka:8761/eureka"
+    image: scorpiobroker/history-query-manager:fanout-test
+    env_file:
+      - path: ./env.env
+        required: true
     ports:
       - "1041:1041"
     depends_on:
-      - kafka
+      - postgres
   at-context-server:
-    image: scorpiobroker/at-context-server:java-kafka-latest
-    environment:
-      DBHOST: postgres
-      BUSHOST: kafka
-      QUARKUS_EUREKA_SERVICE-URL_DEFAULT: "http://eureka:8761/eureka"
+    image: scorpiobroker/at-context-server:fanout-test
+    env_file:
+      - path: ./env.env
+        required: true
     ports:
       - "1042:1042"
     depends_on:
-      - kafka
+      - postgres
   qrymgr:
-    image: scorpiobroker/query-manager:java-kafka-latest
-    environment:
-      DBHOST: postgres
-      BUSHOST: kafka
-      QUARKUS_EUREKA_SERVICE-URL_DEFAULT: "http://eureka:8761/eureka"
+    image: scorpiobroker/query-manager:fanout-test
+    env_file:
+      - path: ./env.env
+        required: true
     ports:
       - "1026:1026"
     depends_on:
-      - kafka
       - postgres
   regmgr:
-    image: scorpiobroker/registry-manager:java-kafka-latest
-    environment:
-      DBHOST: postgres
-      BUSHOST: kafka
-      QUARKUS_EUREKA_SERVICE-URL_DEFAULT: "http://eureka:8761/eureka"
+    image: scorpiobroker/registry-manager:fanout-test
+    env_file:
+      - path: ./env.env
+        required: true
     ports:
       - "1030:1030"
     depends_on:
-      - kafka
       - postgres
   regsbsmgr:
-    image: scorpiobroker/registry-subscription-manager:java-kafka-latest
-    environment:
-      DBHOST: postgres
-      BUSHOST: kafka
-      QUARKUS_EUREKA_SERVICE-URL_DEFAULT: "http://eureka:8761/eureka"
+    image: scorpiobroker/registry-subscription-manager:fanout-test
+    env_file:
+      - path: ./env.env
+        required: true
     ports:
       - "2025:2025"
     depends_on:
-      - kafka
       - postgres
   sbsmgr:
-    image: scorpiobroker/subscription-manager:java-kafka-latest
-    environment:
-      DBHOST: postgres
-      BUSHOST: kafka
-      QUARKUS_EUREKA_SERVICE-URL_DEFAULT: "http://eureka:8761/eureka"
+    image: scorpiobroker/subscription-manager:fanout-test
+    env_file:
+      - path: ./env.env
+        required: true
     ports:
       - "2026:2026"
     depends_on:
-      - kafka
+      - postgres
