@@ -4,80 +4,85 @@ services:
   postgres:
     image: postgis/postgis
     ports:
-      - "5432"
+      - "5432:5432"
     environment:
       POSTGRES_USER: ngb
       POSTGRES_PASSWORD: ngb
       POSTGRES_DB: ngb
+    networks:
+      - docker_network
   emgr:
     image: scorpiobroker/entity-manager:fanout-test
-    env_file:
-      - path: ./env.env
-        required: true
+    env_file: ./env.env
     ports:
       - "1025:1025"
     depends_on:
       - postgres
+    networks:
+      - docker_network
   histemgr:
     image: scorpiobroker/history-entity-manager:fanout-test
-    env_file:
-      - path: ./env.env
-        required: true
+    env_file: ./env.env
     ports:
       - "1040:1040"
     depends_on:
       - postgres
+    networks:
+      - docker_network
   histqmgr:
     image: scorpiobroker/history-query-manager:fanout-test
-    env_file:
-      - path: ./env.env
-        required: true
+    env_file: ./env.env
     ports:
       - "1041:1041"
     depends_on:
       - postgres
+    networks:
+      - docker_network
   at-context-server:
     image: scorpiobroker/at-context-server:fanout-test
-    env_file:
-      - path: ./env.env
-        required: true
+    env_file: ./env.env
     ports:
       - "1042:1042"
     depends_on:
       - postgres
+    networks:
+      - docker_network
   qrymgr:
     image: scorpiobroker/query-manager:fanout-test
-    env_file:
-      - path: ./env.env
-        required: true
+    env_file: ./env.env
     ports:
       - "1026:1026"
     depends_on:
       - postgres
+    networks:
+      - docker_network
   regmgr:
     image: scorpiobroker/registry-manager:fanout-test
-    env_file:
-      - path: ./env.env
-        required: true
+    env_file: ./env.env
     ports:
       - "1030:1030"
     depends_on:
       - postgres
+    networks:
+      - docker_network
   regsbsmgr:
     image: scorpiobroker/registry-subscription-manager:fanout-test
-    env_file:
-      - path: ./env.env
-        required: true
+    env_file: ./env.env
     ports:
       - "2025:2025"
     depends_on:
       - postgres
+    networks:
+      - docker_network
   sbsmgr:
     image: scorpiobroker/subscription-manager:fanout-test
-    env_file:
-      - path: ./env.env
-        required: true
+    env_file: ./env.env
     ports:
       - "2026:2026"
     depends_on:
       - postgres
+    networks:
+      - docker_network
+networks:
+  docker_network:
+    driver: bridge

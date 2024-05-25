@@ -1,5 +1,10 @@
 # <img src="./img/ScorpioLogo.svg" width="140" align="middle"> Scorpio NGSI-LD Broker
 
+source "/home/mde-user/.sdkman/bin/sdkman-init.sh"
+mvn clean install -DskipTests -Dos=java -Ddocker-tag=fanout-test -Ddocker -Psqs -Dquarkus.profile=sqs -T 4C
+mvn clean install -DskipTests -Dnative -Psqs -Dquarkus.profile=sqs -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -T 4C
+
+
 [![FIWARE Core](https://nexus.lab.fiware.org/static/badges/chapters/core.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: BSD-3-Clause](https://img.shields.io/badge/license-BSD%203%20Clause-blue.svg)](https://spdx.org/licenses/BSD-3-Clause.html)
 [![fiware](https://nexus.lab.fiware.org/repository/raw/public/badges/stackoverflow/fiware.svg)](https://stackoverflow.com/questions/tagged/fiware)
