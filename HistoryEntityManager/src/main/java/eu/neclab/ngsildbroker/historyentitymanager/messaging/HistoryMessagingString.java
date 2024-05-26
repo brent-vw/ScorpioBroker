@@ -39,7 +39,6 @@ public class HistoryMessagingString extends HistoryMessagingBase {
 	}
 
 	@Scheduled(every = "5s", delayed = "${scorpio.startupdelay}")
-	@RunOnVirtualThread
 	Uni<Void> checkBuffer() {
 		return super.checkBuffer();
 	}

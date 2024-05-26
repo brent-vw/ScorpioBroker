@@ -127,7 +127,7 @@ public class SubscriptionInfoDAO {
 				unis.add(client.preparedQuery("SELECT '" + AppConstants.INTERNAL_NULL_KEY
 						+ "', subscriptions.subscription, context FROM subscriptions").execute());
 
-				return Uni.combine().all().unis(unis).combinedWith(list -> {
+				return Uni.combine().all().unis(unis).with(list -> {
 					List<Tuple3<String, Map<String, Object>, Map<String, Object>>> result = new ArrayList<>();
 
 					return client.preparedQuery("select jsonb_object_agg(id,body) as col from public.contexts")

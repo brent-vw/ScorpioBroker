@@ -222,7 +222,7 @@ public abstract class HistoryMessagingBase {
 		if (unis.isEmpty()) {
 			return Uni.createFrom().voidItem();
 		}
-		return Uni.combine().all().unis(unis).combinedWith(list -> null).onItem()
+		return Uni.combine().all().unis(unis).with(list -> null).onItem()
 				.transformToUni(list -> Uni.createFrom().voidItem());
 	}
 

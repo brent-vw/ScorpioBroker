@@ -212,7 +212,7 @@ public class EntityOperationsQueryController {
 								qQueryTerm, csfQueryTerm, geoQueryTerm, scopeQueryTerm, langQuery, actualLimit, offset,
 								count, localOnly, context, request.headers(), false,null,null));
 					}
-					return Uni.combine().all().unis(unis).combinedWith(list -> {
+					return Uni.combine().all().unis(unis).with(list -> {
 						Iterator<?> it = list.iterator();
 						QueryResult first = (QueryResult) it.next();
 

@@ -142,7 +142,7 @@ public class HistoryEntityService {
 					}));
 
 		}
-		return Uni.combine().all().unis(unis).combinedWith(list -> {
+		return Uni.combine().all().unis(unis).with(list -> {
 			NGSILDOperationResult result = new NGSILDOperationResult(AppConstants.CREATE_TEMPORAL_REQUEST,
 					request.getId());
 			list.forEach(obj -> {
@@ -193,7 +193,7 @@ public class HistoryEntityService {
 								});
 					}));
 		}
-		return Uni.combine().all().unis(unis).combinedWith(list -> {
+		return Uni.combine().all().unis(unis).with(list -> {
 			NGSILDOperationResult result = new NGSILDOperationResult(AppConstants.APPEND_TEMPORAL_REQUEST,
 					request.getId());
 			list.forEach(obj -> {
@@ -245,7 +245,7 @@ public class HistoryEntityService {
 					}));
 
 		}
-		return Uni.combine().all().unis(unis).combinedWith(list -> {
+		return Uni.combine().all().unis(unis).with(list -> {
 			NGSILDOperationResult result = new NGSILDOperationResult(AppConstants.UPDATE_TEMPORAL_INSTANCE_REQUEST,
 					request.getId());
 			list.forEach(obj -> {
@@ -287,7 +287,7 @@ public class HistoryEntityService {
 
 		}
 		unis.add(0, local);
-		return Uni.combine().all().unis(unis).combinedWith(list -> {
+		return Uni.combine().all().unis(unis).with(list -> {
 			NGSILDOperationResult result = new NGSILDOperationResult(AppConstants.DELETE_TEMPORAL_REQUEST,
 					request.getId());
 			list.forEach(obj -> {
@@ -335,7 +335,7 @@ public class HistoryEntityService {
 					}));
 		}
 		unis.add(0, local);
-		return Uni.combine().all().unis(unis).combinedWith(list -> {
+		return Uni.combine().all().unis(unis).with(list -> {
 			NGSILDOperationResult result = new NGSILDOperationResult(AppConstants.DELETE_TEMPORAL_ATTRIBUTE_REQUEST,
 					request.getId());
 			list.forEach(obj -> {
@@ -383,7 +383,7 @@ public class HistoryEntityService {
 					}));
 		}
 		unis.add(0, local);
-		return Uni.combine().all().unis(unis).combinedWith(list -> {
+		return Uni.combine().all().unis(unis).with(list -> {
 			NGSILDOperationResult result = new NGSILDOperationResult(
 					AppConstants.DELETE_TEMPORAL_ATTRIBUTE_INSTANCE_REQUEST, request.getId());
 			list.forEach(obj -> {

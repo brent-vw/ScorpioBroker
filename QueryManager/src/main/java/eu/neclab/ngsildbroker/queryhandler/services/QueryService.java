@@ -232,7 +232,7 @@ public class QueryService {
 			return Uni.createFrom().item(q);
 		}
 
-		return Uni.combine().all().unis(unis).combinedWith(list -> {
+		return Uni.combine().all().unis(unis).with(list -> {
 			QueryResult result = new QueryResult();
 			Map<String, Set<String>> entityId2Types = Maps.newHashMap();
 			Map<String, Set<String>> entityId2Scopes = Maps.newHashMap();
@@ -403,7 +403,7 @@ public class QueryService {
 				idsString = "";
 			}
 		}
-		return Uni.combine().all().unis(backUpUnis).combinedWith(l1 -> {
+		return Uni.combine().all().unis(backUpUnis).with(l1 -> {
 			Map<String, Map<String, Object>> result = Maps.newHashMap();
 			for (Object obj1 : l1) {
 				Map<String, Map<String, Object>> m1 = (Map<String, Map<String, Object>>) obj1;
@@ -629,7 +629,7 @@ public class QueryService {
 					if (rows.size() > 0) {
 						List<Uni<List<Object>>> unis = getRemoteCalls(rows,
 								NGSIConstants.NGSI_LD_TYPES_ENDPOINT + "?details=true");
-						return Uni.combine().all().unis(unis).combinedWith(list -> {
+						return Uni.combine().all().unis(unis).with(list -> {
 							for (Object entry : list) {
 								if (((List) entry).isEmpty()) {
 									continue;
@@ -710,7 +710,7 @@ public class QueryService {
 					Set<String> currentTypes = Sets.newHashSet(t.getItem2());
 					if (rows.size() > 0) {
 						List<Uni<List<Object>>> unis = getRemoteCalls(rows, NGSIConstants.NGSI_LD_TYPES_ENDPOINT);
-						return Uni.combine().all().unis(unis).combinedWith(list -> {
+						return Uni.combine().all().unis(unis).with(list -> {
 							for (Object entry : list) {
 								if (!((List) entry).isEmpty()) {
 									Map<String, Object> typeMap = ((List<Map<String, Object>>) entry).get(0);
@@ -769,7 +769,7 @@ public class QueryService {
 					if (rows.size() > 0) {
 						List<Uni<List<Object>>> remoteResults = getRemoteCalls(rows,
 								NGSIConstants.NGSI_LD_TYPES_ENDPOINT + "/" + type);
-						return Uni.combine().all().unis(remoteResults).combinedWith(list -> {
+						return Uni.combine().all().unis(remoteResults).with(list -> {
 							long count = 0;
 							for (Object obj : list) {
 								if (!((List) obj).isEmpty()) {
@@ -863,7 +863,7 @@ public class QueryService {
 					if (rows.size() > 0) {
 						List<Uni<List<Object>>> remoteResults = getRemoteCalls(rows,
 								NGSIConstants.NGSI_LD_ATTRIBUTES_ENDPOINT + "?details=true");
-						return Uni.combine().all().unis(remoteResults).combinedWith(list -> {
+						return Uni.combine().all().unis(remoteResults).with(list -> {
 							for (Object obj : list) {
 								if (((List) obj).isEmpty()) {
 									continue;
@@ -939,7 +939,7 @@ public class QueryService {
 					if (rows.size() > 0) {
 						List<Uni<List<Object>>> remoteResults = getRemoteCalls(rows,
 								NGSIConstants.NGSI_LD_ATTRIBUTES_ENDPOINT);
-						return Uni.combine().all().unis(remoteResults).combinedWith(list -> {
+						return Uni.combine().all().unis(remoteResults).with(list -> {
 							for (Object obj : list) {
 								if (((List) obj).isEmpty()) {
 									continue;
@@ -995,7 +995,7 @@ public class QueryService {
 					if (rows.size() > 0) {
 						List<Uni<List<Object>>> remoteResults = getRemoteCalls(rows,
 								NGSIConstants.NGSI_LD_ATTRIBUTES_ENDPOINT + "/" + attrib);
-						return Uni.combine().all().unis(remoteResults).combinedWith(list -> {
+						return Uni.combine().all().unis(remoteResults).with(list -> {
 							long count = 0;
 							for (Object obj : list) {
 								if (((List) obj).isEmpty()) {
@@ -1169,7 +1169,7 @@ public class QueryService {
 					}));
 		}
 
-		return Uni.combine().all().unis(unis).combinedWith(list -> {
+		return Uni.combine().all().unis(unis).with(list -> {
 			Map<String, Map<String, Map<String, Object>>> result = Maps.newHashMap();
 			Set<String> types = Sets.newHashSet();
 			Set<String> scopes = Sets.newHashSet();
@@ -1477,7 +1477,7 @@ public class QueryService {
 							}));
 				}
 			}
-			remoteIds = Uni.combine().all().unis(unis).combinedWith(list -> {
+			remoteIds = Uni.combine().all().unis(unis).with(list -> {
 				Map<QueryRemoteHost, List<String>> result = Maps.newHashMap();
 				for (Object obj : list) {
 					if (obj != null) {
@@ -1596,7 +1596,7 @@ public class QueryService {
 				idsString = "";
 			}
 		}
-		return Uni.combine().all().unis(backUpUnis).combinedWith(l1 -> {
+		return Uni.combine().all().unis(backUpUnis).with(l1 -> {
 			List<String> allIds = Lists.newArrayList();
 			QueryRemoteHost qrh = null;
 			for (Object obj1 : l1) {
@@ -1668,7 +1668,7 @@ public class QueryService {
 				}
 			}
 			if (!unisOfMaps.isEmpty()) {
-				return Uni.combine().all().unis(unisOfMaps).collectFailures().combinedWith(x -> x).onItemOrFailure()
+				return Uni.combine().all().unis(unisOfMaps).collectFailures().with(x -> x).onItemOrFailure()
 						.transformToUni((list, fail) -> {
 							return Uni.createFrom().item(Map.of(JsonLdConsts.GRAPH, finalRelResult));
 						});
@@ -1738,7 +1738,7 @@ public Uni<Map<String, Object>> getEntityInline(Context context, String tenant, 
 				}
 			}
 			if (!unisOfMaps.isEmpty()) {
-				return Uni.combine().all().unis(unisOfMaps).collectFailures().combinedWith(x -> x).onItemOrFailure()
+				return Uni.combine().all().unis(unisOfMaps).collectFailures().with(x -> x).onItemOrFailure()
 						.transformToUni((list, fail) -> {
 							return Uni.createFrom().item(ent);
 						});

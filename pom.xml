@@ -28,5 +28,45 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-container-image-jib</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-amazon-lambda-rest</artifactId>
+    </dependency>
   </dependencies>
+  <profiles>
+    <profile>
+      <id>sqs-native</id>
+      <activation>
+        <property>
+          <name>sqs-native</name>
+        </property>
+      </activation>
+      <properties>
+        <sqs></sqs>
+        <skipITs>false</skipITs>
+        <quarkus.native.enabled>true</quarkus.native.enabled>
+        <quarkus.container-image.build>true</quarkus.container-image.build>
+        <quarkus.profile>sqs</quarkus.profile>
+        <quarkus.native.container-build>true</quarkus.native.container-build>
+        <quarkus.container-image.tag>${docker-tag}</quarkus.container-image.tag>
+      </properties>
+    </profile>
+    <profile>
+      <id>sqs-jdk</id>
+      <activation>
+        <property>
+          <name>sqs-jvm</name>
+        </property>
+      </activation>
+      <properties>
+        <sqs></sqs>
+        <skipITs>false</skipITs>
+        <quarkus.native.enabled>false</quarkus.native.enabled>
+        <quarkus.container-image.build>true</quarkus.container-image.build>
+        <quarkus.profile>sqs</quarkus.profile>
+        <quarkus.native.container-build>false</quarkus.native.container-build>
+        <quarkus.container-image.tag>${docker-tag}</quarkus.container-image.tag>
+      </properties>
+    </profile>
+  </profiles>
 </project>

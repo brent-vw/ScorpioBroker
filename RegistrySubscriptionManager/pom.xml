@@ -31,20 +31,12 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-container-image-jib</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-amazon-lambda-rest</artifactId>
+    </dependency>
   </dependencies>
   <profiles>
-    <profile>
-      <id>native</id>
-      <activation>
-        <property>
-          <name>native</name>
-        </property>
-      </activation>
-      <properties>
-        <skipITs>false</skipITs>
-        <quarkus.native.enabled>true</quarkus.native.enabled>
-      </properties>
-    </profile>
     <profile>
       <id>kafka</id>
       <activation>

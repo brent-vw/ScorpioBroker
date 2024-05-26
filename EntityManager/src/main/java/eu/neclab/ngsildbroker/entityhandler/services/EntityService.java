@@ -319,7 +319,7 @@ public class EntityService {
 
 			}));
 		}
-		return Uni.combine().all().unis(unis).combinedWith(list -> {
+		return Uni.combine().all().unis(unis).with(list -> {
 			return getResult(list);
 		});
 	}
@@ -367,7 +367,7 @@ public class EntityService {
 			request.setDistributed(false);
 		}
 		unis.add(localDeleteAttrib(request, context));
-		return Uni.combine().all().unis(unis).combinedWith(list -> getResult(list));
+		return Uni.combine().all().unis(unis).with(list -> getResult(list));
 
 	}
 
@@ -453,7 +453,7 @@ public class EntityService {
 		}
 
 		unis.add(localDeleteEntity(request, context));
-		return Uni.combine().all().unis(unis).combinedWith(list -> getResult(list));
+		return Uni.combine().all().unis(unis).with(list -> getResult(list));
 
 	}
 
@@ -556,7 +556,7 @@ public class EntityService {
 
 			}));
 		}
-		return Uni.combine().all().unis(unis).combinedWith(list -> {
+		return Uni.combine().all().unis(unis).with(list -> {
 			return getResult(list);
 		});
 	}
@@ -610,7 +610,7 @@ public class EntityService {
 
 			}));
 		}
-		return Uni.combine().all().unis(unis).combinedWith(list -> {
+		return Uni.combine().all().unis(unis).with(list -> {
 			return getResult(list);
 		});
 	}
@@ -695,7 +695,7 @@ public class EntityService {
 
 			}));
 		}
-		return Uni.combine().all().unis(unis).combinedWith(list -> {
+		return Uni.combine().all().unis(unis).with(list -> {
 			return getResult(list);
 		});
 	}
@@ -1010,7 +1010,7 @@ public class EntityService {
 				}
 
 				if (remoteHost.canDoBatchOp()) {
-					unis.add(Uni.combine().all().unis(compactedUnis).combinedWith(list -> {
+					unis.add(Uni.combine().all().unis(compactedUnis).with(list -> {
 						List<Map<String, Object>> toSend = Lists.newArrayList();
 						for (Object obj : list) {
 							toSend.add((Map<String, Object>) obj);
@@ -1038,7 +1038,7 @@ public class EntityService {
 									});
 						}));
 					}
-					unis.add(Uni.combine().all().unis(singleUnis).combinedWith(list -> {
+					unis.add(Uni.combine().all().unis(singleUnis).with(list -> {
 						List<NGSILDOperationResult> result = Lists.newArrayList();
 						list.forEach(obj -> result.add((NGSILDOperationResult) obj));
 						return result;
@@ -1089,7 +1089,7 @@ public class EntityService {
 			}));
 		}
 
-		return Uni.combine().all().unis(unis).combinedWith(resultLists -> {
+		return Uni.combine().all().unis(unis).with(resultLists -> {
 			List<NGSILDOperationResult> result = Lists.newArrayList();
 			resultLists.forEach(resultList -> {
 				result.addAll((List<NGSILDOperationResult>) resultList);
@@ -1141,7 +1141,7 @@ public class EntityService {
 					compactedUnis.add(jsonLdService.compact(expanded, null, context, AppConstants.opts, -1));
 				}
 				if (remoteHost.canDoBatchOp()) {
-					unis.add(Uni.combine().all().unis(compactedUnis).combinedWith(list -> {
+					unis.add(Uni.combine().all().unis(compactedUnis).with(list -> {
 						List<Map<String, Object>> toSend = Lists.newArrayList();
 						for (Object obj : list) {
 							toSend.add((Map<String, Object>) obj);
@@ -1172,7 +1172,7 @@ public class EntityService {
 									});
 						}));
 					}
-					unis.add(Uni.combine().all().unis(singleUnis).combinedWith(list -> {
+					unis.add(Uni.combine().all().unis(singleUnis).with(list -> {
 						List<NGSILDOperationResult> result = Lists.newArrayList();
 						list.forEach(obj -> result.add((NGSILDOperationResult) obj));
 						return result;
@@ -1237,7 +1237,7 @@ public class EntityService {
 		if (unis.isEmpty()) {
 			return Uni.createFrom().failure(new ResponseException(ErrorType.NotFound));
 		}
-		return Uni.combine().all().unis(unis).combinedWith(resultLists -> {
+		return Uni.combine().all().unis(unis).with(resultLists -> {
 			List<NGSILDOperationResult> result = Lists.newArrayList();
 			resultLists.forEach(resultList -> {
 				result.addAll((List<NGSILDOperationResult>) resultList);
@@ -1342,7 +1342,7 @@ public class EntityService {
 				compactedUnis.add(jsonLdService.compact(expanded, null, context, AppConstants.opts, -1));
 			}
 			if (remoteHost.canDoBatchOp()) {
-				unis.add(Uni.combine().all().unis(compactedUnis).combinedWith(list -> {
+				unis.add(Uni.combine().all().unis(compactedUnis).with(list -> {
 					List<Map<String, Object>> toSend = Lists.newArrayList();
 					for (Object obj : list) {
 						toSend.add((Map<String, Object>) obj);
@@ -1387,7 +1387,7 @@ public class EntityService {
 								});
 					}));
 				}
-				unis.add(Uni.combine().all().unis(singleUnis).combinedWith(list -> {
+				unis.add(Uni.combine().all().unis(singleUnis).with(list -> {
 					List<NGSILDOperationResult> result = Lists.newArrayList();
 					list.forEach(obj -> result.add((NGSILDOperationResult) obj));
 					return result;
@@ -1398,7 +1398,7 @@ public class EntityService {
 			return local;
 		}
 		unis.add(0, local);
-		return Uni.combine().all().unis(unis).combinedWith(resultLists -> {
+		return Uni.combine().all().unis(unis).with(resultLists -> {
 			List<NGSILDOperationResult> result = Lists.newArrayList();
 			resultLists.forEach(resultList -> {
 				result.addAll((List<NGSILDOperationResult>) resultList);
@@ -1443,7 +1443,7 @@ public class EntityService {
 
 							}));
 				}
-				unis.add(Uni.combine().all().unis(singleUnis).combinedWith(list -> {
+				unis.add(Uni.combine().all().unis(singleUnis).with(list -> {
 					List<NGSILDOperationResult> result = Lists.newArrayList();
 					list.forEach(obj -> result.add((NGSILDOperationResult) obj));
 					return result;
@@ -1490,7 +1490,7 @@ public class EntityService {
 				});
 
 		unis.add(0, local);
-		return Uni.combine().all().unis(unis).combinedWith(resultLists -> {
+		return Uni.combine().all().unis(unis).with(resultLists -> {
 			List<NGSILDOperationResult> result = Lists.newArrayList();
 			resultLists.forEach(resultList -> {
 				result.addAll((List<NGSILDOperationResult>) resultList);
@@ -1561,7 +1561,7 @@ public class EntityService {
 
 			}));
 		}
-		return Uni.combine().all().unis(unis).combinedWith(list -> {
+		return Uni.combine().all().unis(unis).with(list -> {
 			return getResult(list);
 		});
 	}
@@ -1629,7 +1629,7 @@ public class EntityService {
 
 			}));
 		}
-		return Uni.combine().all().unis(unis).combinedWith(list -> {
+		return Uni.combine().all().unis(unis).with(list -> {
 			return getResult(list);
 		});
 	}
@@ -1707,7 +1707,7 @@ public class EntityService {
 
 			}));
 		}
-		return Uni.combine().all().unis(unis).combinedWith(list -> {
+		return Uni.combine().all().unis(unis).with(list -> {
 			return getResult(list);
 		});
 	}
@@ -1798,7 +1798,7 @@ public class EntityService {
 					compactedUnis.add(jsonLdService.compact(expanded, null, context, AppConstants.opts, -1));
 				}
 				if (remoteHost.canDoBatchOp()) {
-					unis.add(Uni.combine().all().unis(compactedUnis).combinedWith(list -> {
+					unis.add(Uni.combine().all().unis(compactedUnis).with(list -> {
 						List<Map<String, Object>> toSend = Lists.newArrayList();
 						for (Object obj : list) {
 							toSend.add((Map<String, Object>) obj);
@@ -1829,7 +1829,7 @@ public class EntityService {
 									});
 						}));
 					}
-					unis.add(Uni.combine().all().unis(singleUnis).combinedWith(list -> {
+					unis.add(Uni.combine().all().unis(singleUnis).with(list -> {
 						List<NGSILDOperationResult> result = Lists.newArrayList();
 						list.forEach(obj -> result.add((NGSILDOperationResult) obj));
 						return result;
@@ -1886,7 +1886,7 @@ public class EntityService {
 		if (unis.isEmpty()) {
 			return Uni.createFrom().failure(new ResponseException(ErrorType.NotFound));
 		}
-		return Uni.combine().all().unis(unis).combinedWith(resultLists -> {
+		return Uni.combine().all().unis(unis).with(resultLists -> {
 			List<NGSILDOperationResult> result = Lists.newArrayList();
 			resultLists.forEach(resultList -> {
 				result.addAll((List<NGSILDOperationResult>) resultList);

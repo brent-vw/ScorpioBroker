@@ -277,7 +277,7 @@ public class SubscriptionService {
 			if (unis.isEmpty()) {
 				return Uni.createFrom().voidItem();
 			}
-			return Uni.combine().all().unis(unis).combinedWith(list -> {
+			return Uni.combine().all().unis(unis).with(list -> {
 				for (Object obj : list) {
 					Tuple2<Tuple2<String, Map<String, Object>>, Context> tuple = (Tuple2<Tuple2<String, Map<String, Object>>, Context>) obj;
 					SubscriptionRequest request;
@@ -1039,7 +1039,7 @@ public class SubscriptionService {
 		if (unis.isEmpty()) {
 			return Uni.createFrom().voidItem();
 		}
-		return Uni.combine().all().unis(unis).combinedWith(list -> list).onItem()
+		return Uni.combine().all().unis(unis).with(list -> list).onItem()
 				.transformToUni(list -> Uni.createFrom().voidItem());
 	}
 
@@ -1057,7 +1057,7 @@ public class SubscriptionService {
 					sub.getScopeQueryString(), false, null, null, true));
 		}
 
-		return Uni.combine().all().unis(unis).combinedWith(list -> {
+		return Uni.combine().all().unis(unis).with(list -> {
 			List<Map<String, Object>> result = Lists.newArrayList();
 			for (Object obj : list) {
 				List<Map<String, Object>> qResult = (List<Map<String, Object>>) obj;

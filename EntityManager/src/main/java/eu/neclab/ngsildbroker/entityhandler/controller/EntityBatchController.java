@@ -72,7 +72,7 @@ public class EntityBatchController {
 					.transform(i -> Tuple2.of((String) compactedEntity.get("id"), (Object) i)).onFailure()
 					.recoverWithItem(e -> Tuple2.of((String) compactedEntity.get("id"), (Object) e)));
 		}
-		return Uni.combine().all().unis(unis).collectFailures().combinedWith(list -> {
+		return Uni.combine().all().unis(unis).collectFailures().with(list -> {
 			List<NGSILDOperationResult> fails = Lists.newArrayList();
 			List<Map<String, Object>> expandedEntities = Lists.newArrayList();
 			List<Context> contexts = Lists.newArrayList();
@@ -136,7 +136,7 @@ public class EntityBatchController {
 					.transform(i -> Tuple2.of((String) compactedEntity.get("id"), (Object) i)).onFailure()
 					.recoverWithItem(e -> Tuple2.of((String) compactedEntity.get("id"), (Object) e)));
 		}
-		return Uni.combine().all().unis(unis).collectFailures().combinedWith(list -> {
+		return Uni.combine().all().unis(unis).collectFailures().with(list -> {
 			List<NGSILDOperationResult> fails = Lists.newArrayList();
 			List<Map<String, Object>> expandedEntities = Lists.newArrayList();
 			List<Context> contexts = Lists.newArrayList();
@@ -197,7 +197,7 @@ public class EntityBatchController {
 					.transform(i -> Tuple2.of((String) compactedEntity.get("id"), (Object) i)).onFailure()
 					.recoverWithItem(e -> Tuple2.of((String) compactedEntity.get("id"), (Object) e)));
 		}
-		return Uni.combine().all().unis(unis).collectFailures().combinedWith(list -> {
+		return Uni.combine().all().unis(unis).collectFailures().with(list -> {
 			List<NGSILDOperationResult> fails = Lists.newArrayList();
 			List<Map<String, Object>> expandedEntities = Lists.newArrayList();
 			List<Context> contexts = Lists.newArrayList();
@@ -263,7 +263,7 @@ public class EntityBatchController {
 					.transform(i -> Tuple2.of((String) compactedEntity.get("id"), (Object) i)).onFailure()
 					.recoverWithItem(e -> Tuple2.of((String) compactedEntity.get("id"), (Object) e)));
 		}
-		return Uni.combine().all().unis(unis).collectFailures().combinedWith(list -> {
+		return Uni.combine().all().unis(unis).collectFailures().with(list -> {
 			List<NGSILDOperationResult> fails = Lists.newArrayList();
 			List<Map<String, Object>> expandedEntities = Lists.newArrayList();
 			List<Context> contexts = Lists.newArrayList();

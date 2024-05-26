@@ -163,7 +163,7 @@ public class HistoryQueryService {
 					}));
 		}
 		remoteCalls.add(0, local);
-		return Uni.combine().all().unis(remoteCalls).combinedWith(list -> {
+		return Uni.combine().all().unis(remoteCalls).with(list -> {
 			QueryResult result = new QueryResult();
 			Map<String, Map<String, Object>> entityId2Entity = Maps.newHashMap();
 			long rCount = 0;
@@ -258,7 +258,7 @@ public class HistoryQueryService {
 							}
 						}));
 			}
-			Uni<Map<String, Object>> remote = Uni.combine().all().unis(remoteCalls).combinedWith(list -> {
+			Uni<Map<String, Object>> remote = Uni.combine().all().unis(remoteCalls).with(list -> {
 				Map<String, Object> result = Maps.newHashMap();
 				for (Object entry : list) {
 					if (entry == null) {

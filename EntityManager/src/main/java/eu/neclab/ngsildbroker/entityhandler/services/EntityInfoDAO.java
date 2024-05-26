@@ -219,7 +219,7 @@ public class EntityInfoDAO {
 												tenantReg -> Tuple2.of(AppConstants.INTERNAL_NULL_KEY, tenantReg));
 									}));
 						}
-						return Uni.combine().all().unis(unis).combinedWith(list -> {
+						return Uni.combine().all().unis(unis).with(list -> {
 							Table<String, String, List<RegistrationEntry>> result = HashBasedTable.create();
 							for (Object obj : list) {
 								Tuple2<String, RowSet<Row>> tuple = (Tuple2<String, RowSet<Row>>) obj;
@@ -531,7 +531,7 @@ public class EntityInfoDAO {
 												tenantReg -> Tuple2.of(AppConstants.INTERNAL_NULL_KEY, tenantReg));
 									}));
 						}
-						return Uni.combine().all().unis(unis).combinedWith(list -> {
+						return Uni.combine().all().unis(unis).with(list -> {
 							Table<String, String, List<RegistrationEntry>> result = HashBasedTable.create();
 							for (Object obj : list) {
 								Tuple2<String, RowSet<Row>> tuple = (Tuple2<String, RowSet<Row>>) obj;

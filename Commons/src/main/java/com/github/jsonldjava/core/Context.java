@@ -344,7 +344,7 @@ public class Context extends LinkedHashMap<String, Object> {
 			return Uni.createFrom().item(result);
 		} else {
 			Context finalResult = result;
-			return Uni.combine().all().unis(rds).combinedWith(list -> list).onItem().transformToUni(list -> {
+			return Uni.combine().all().unis(rds).with(list -> list).onItem().transformToUni(list -> {
 				Uni<Context> resultUni = Uni.createFrom().item(finalResult);
 				for (Object obj : list) {
 					Tuple2<RemoteDocument, Object> tuple = (Tuple2<RemoteDocument, Object>) obj;

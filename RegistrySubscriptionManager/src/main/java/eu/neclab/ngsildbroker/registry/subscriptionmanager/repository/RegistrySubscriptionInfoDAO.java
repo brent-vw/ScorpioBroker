@@ -171,7 +171,7 @@ public class RegistrySubscriptionInfoDAO {
 									+ "', subscription, context FROM registry_subscriptions").execute();
 						}));
 
-				return Uni.combine().all().unis(unis).combinedWith(list -> {
+				return Uni.combine().all().unis(unis).with(list -> {
 					List<Tuple3<String, Map<String, Object>, Map<String, Object>>> result = Lists.newArrayList();
 //					for (Object obj : list) {
 //						@SuppressWarnings("unchecked")

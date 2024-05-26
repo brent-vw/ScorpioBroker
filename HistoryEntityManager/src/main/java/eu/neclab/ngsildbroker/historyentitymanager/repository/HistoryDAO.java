@@ -234,7 +234,7 @@ public class HistoryDAO {
 				logger.debug(noTypeSql);
 				tmpList.add(client.preparedQuery(noTypeSql).executeBatch(batchNoType));
 			}
-			return Uni.combine().all().unis(tmpList).combinedWith(l -> l).onItem().transformToUni(l -> {
+			return Uni.combine().all().unis(tmpList).with(l -> l).onItem().transformToUni(l -> {
 				List<Uni<RowSet<Row>>> attribList = Lists.newArrayList();
 				String sql;
 				if (!batchAttribs.isEmpty()) {
@@ -249,7 +249,7 @@ public class HistoryDAO {
 					logger.debug("batch location " + sql);
 					attribList.add(client.preparedQuery(sql).executeBatch(batchAttribsWtihLocation));
 				}
-				return Uni.combine().all().unis(attribList).combinedWith(l2 -> l2).onItem().transform(l1 -> l1);
+				return Uni.combine().all().unis(attribList).with(l2 -> l2).onItem().transform(l1 -> l1);
 
 			}).onItem().transformToUni(t -> Uni.createFrom().voidItem());
 		});
@@ -523,7 +523,7 @@ public class HistoryDAO {
 												tenantReg -> Tuple2.of(AppConstants.INTERNAL_NULL_KEY, tenantReg));
 									}));
 						}
-						return Uni.combine().all().unis(unis).combinedWith(list -> {
+						return Uni.combine().all().unis(unis).with(list -> {
 							Table<String, String, List<RegistrationEntry>> result = HashBasedTable.create();
 							for (Object obj : list) {
 								Tuple2<String, RowSet<Row>> tuple = (Tuple2<String, RowSet<Row>>) obj;
