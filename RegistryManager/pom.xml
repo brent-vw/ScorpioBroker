@@ -28,7 +28,38 @@
       <artifactId>quarkus-amazon-lambda-rest</artifactId>
     </dependency>
   </dependencies>
-  <profiles>
+  <profiles><profile>
+            <id>sqs</id>
+            <activation>
+                <property>
+                    <name>sqs</name>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>eu.neclab.ngsildbroker</groupId>
+                    <artifactId>sns-fanout-messaging</artifactId>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>
+                                    eu/neclab/ngsildbroker/queryhandler/messaging/QueryManagerMessagingByteArray.java
+                                </exclude>
+                                <exclude>
+                                    eu/neclab/ngsildbroker/queryhandler/messaging/QueryManagerMessagingInMemory.java
+                                </exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     <profile>
       <id>native</id>
       <activation>
